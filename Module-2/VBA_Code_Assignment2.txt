@@ -1,0 +1,70 @@
+Sub stock_ticker()
+
+    For Each ws In Worksheets
+    
+    Dim Ticker_Name As String
+    Dim Ticker_Total As Double
+    Dim Worksheetname As String
+    Dim Summary_Table_Row As Integer
+
+    
+    Ticker_Total = 0
+    Summary_Table_Row = 2
+
+
+    
+        lastrow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+        Worksheetname = ws.Name
+        
+        ' Loop through all ticker symbol entries
+        For i = 2 To lastrow
+        
+    
+
+            ' Check if we are still within the same ticker symbol
+            If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1).Value Then
+
+            ' Set the ticker name
+            Ticker_Name = ws.Cells(i, 1).Value
+
+
+            ' Print the Ticker Symbol in the Summary Table
+            ws.Range("M" & Summary_Table_Row).Value = Ticker_Name
+      
+            ' Show the Volume Total next to the ticker name
+            ws.Range("N" & Summary_Table_Row).Value = Ticker_Total
+      
+            Ticker_Total = Ticker_Total + 1
+
+            ' Add one to the summary table row
+            Summary_Table_Row = Summary_Table_Row + 1
+      
+            ' Reset the Brand Total
+            Brand_Total = 0
+      
+
+        
+
+            Else
+    
+            Ticker_Total = Ticker_Total + ws.Cells(i, 7).Value
+    
+
+
+            End If
+    
+   
+       
+
+        Next i
+  
+        ws.Cells(1, 13).Value = "Ticker Symbol"
+        ws.Cells(1, 14).Value = "Total Volume"
+
+        
+    Next ws
+    
+    
+
+End Sub
+
